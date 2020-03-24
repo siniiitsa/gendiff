@@ -1,4 +1,4 @@
-# frontend-project-lvl2
+# Gendiff app
 
 a cli app that compares two configuration files and shows a difference.
 
