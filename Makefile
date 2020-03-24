@@ -4,3 +4,5 @@ make install:
 make lint:
 	npx eslint .
 
+publish:
+	npm publish --dry-run

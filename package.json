@@ -2,7 +2,7 @@
   "name": "gendiff",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/siniiitsa/frontend-project-lvl2.git"
   },
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "keywords": [],
   "author": "Sergey Sinitsa",
   "license": "ISC",
@@ -18,7 +21,9 @@
     "url": "https://github.com/siniiitsa/frontend-project-lvl2/issues"
   },
   "homepage": "https://github.com/siniiitsa/frontend-project-lvl2#readme",
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^5.0.0"
+  },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
