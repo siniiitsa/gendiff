@@ -1,4 +1,6 @@
+import path from 'path';
 import program from 'commander';
+
 import genDiff from './gendiff.js';
 
 // basics
@@ -17,7 +19,9 @@ program
 // actions
 program
   .action((firstConfig, secondConfig) => {
-    const diff = genDiff(firstConfig, secondConfig);
+    const path1 = path.resolve(firstConfig);
+    const path2 = path.resolve(secondConfig);
+    const diff = genDiff(path1, path2);
     console.log(diff);
   });
 
