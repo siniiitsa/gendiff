@@ -28,7 +28,6 @@ const genDiff = (befPath, aftPath) => {
     ];
   }, []);
 
-
   const diffs = Object.entries(aft).reduce((acc, [key, val]) => {
     if (!_.has(bef, key)) {
       return [...acc, makeDiff(key, val, '+')];
