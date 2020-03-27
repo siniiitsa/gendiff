@@ -3,9 +3,7 @@ import fs from 'fs';
 
 const getJsObject = (path) => JSON.parse(fs.readFileSync(path));
 
-const makeDiff = (key, val, sign) => (
-  sign === undefined ? `    ${key}: ${val}` : `  ${sign} ${key}: ${val}`
-);
+const makeDiff = (key, val, sign) => `  ${sign || ' '} ${key}: ${val}`;
 
 const genDiff = (befPath, aftPath) => {
   const bef = getJsObject(befPath);
