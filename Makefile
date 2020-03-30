@@ -1,7 +1,7 @@
-make install:
+install:
 	npm install
 
-make lint:
+lint:
 	npx eslint .
 
 publish:
