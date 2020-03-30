@@ -3,17 +3,21 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build"
   },
-  "main": "src.gendiff.js",
-  "type": "module",
+  "main": "dist/gendiff.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/siniiitsa/frontend-project-lvl2.git"
   },
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "dist/bin/gendiff.js"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "Sergey Sinitsa",
   "license": "ISC",

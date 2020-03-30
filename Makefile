@@ -9,3 +9,13 @@ publish:
 
 test:
 	npx jest
+
+watch:
+	npx jest --watch
+
+build:
+	rm -rf dist
+	npm run build
+
+test-coverage:
+	npm test -- --coverage
