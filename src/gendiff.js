@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { has, isEqual } from 'lodash';
 import fs from 'fs';
 
 const getJsObject = (path) => JSON.parse(fs.readFileSync(path));
@@ -11,11 +11,11 @@ const genDiff = (befPath, aftPath) => {
   const lineBreak = '\n';
 
   const removedAndChangedDiffs = Object.entries(bef).reduce((acc, [key, val]) => {
-    if (!_.has(aft, key)) {
+    if (!has(aft, key)) {
       return [...acc, makeDiff(key, val, '-')];
     }
 
-    if (_.isEqual(aft[key], val)) {
+    if (isEqual(aft[key], val)) {
       return [...acc, makeDiff(key, val)];
     }
 
@@ -27,7 +27,7 @@ const genDiff = (befPath, aftPath) => {
   }, []);
 
   const diffs = Object.entries(aft).reduce((acc, [key, val]) => {
-    if (!_.has(bef, key)) {
+    if (!has(bef, key)) {
       return [...acc, makeDiff(key, val, '+')];
     }
 
