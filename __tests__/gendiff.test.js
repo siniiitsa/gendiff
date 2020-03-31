@@ -11,10 +11,10 @@ const readFile = (filename) => (
   fs.readFileSync(getFixturePath(filename), 'utf-8')
 );
 
-test('compare flat json files', async () => {
-  const beforePath = getFixturePath('before.json');
-  const afterPath = getFixturePath('after.json');
+test('compare flat JSON files', async () => {
+  const jsonBefore = getFixturePath('before.json');
+  const jsonAfter = getFixturePath('after.json');
   const result = await readFile('result.txt');
 
-  expect(genDiff(beforePath, afterPath)).toBe(result);
+  expect(genDiff(jsonBefore, jsonAfter)).toBe(result);
 });
