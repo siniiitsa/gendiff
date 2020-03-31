@@ -26,12 +26,12 @@ const makeDiff = (key, value, type) => ({ key, value, type });
 
 const diffToStr = ({ key, value, type }) => `${getSign(type)} ${key}: ${value}`;
 
-const indentStr = (str, count) => `${' '.repeat(count)}${str}`;
+const indent = (str, count) => `${' '.repeat(count)}${str}`;
 
 const toString = (diffs) => {
   const diffStrings = diffs
     .map(diffToStr)
-    .map((diffStr) => indentStr(diffStr, 2))
+    .map((diffStr) => indent(diffStr, 2))
     .join('\n');
 
   const wrapped = `{\n${diffStrings}\n}`;
