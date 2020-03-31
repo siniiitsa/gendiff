@@ -1,41 +1,60 @@
-import { has, isEqual } from 'lodash';
+import { has, isEqual, uniq } from 'lodash';
 import fs from 'fs';
 
 const getJsObject = (path) => JSON.parse(fs.readFileSync(path));
 
-const makeDiff = (key, val, sign) => `  ${sign || ' '} ${key}: ${val}`;
+const diffTypes = {
+  unchanged: 'unchanged',
+  removed: 'removed',
+  added: 'added',
+};
+
+const getSign = (type) => {
+  switch (type) {
+    case diffTypes.unchanged:
+      return ' ';
+    case diffTypes.added:
+      return '+';
+    case diffTypes.removed:
+      return '-';
+    default:
+      return null;
+  }
+};
+
+const makeDiff = (key, value, type) => ({ key, value, type });
+
+const toString = (diffs) => {
+  const diffToString = ({ key, value, type }) => (
+    `  ${getSign(type)} ${key}: ${value}`
+  );
+
+  return `{\n${diffs.map(diffToString).join('\n')}\n}`;
+};
 
 const genDiff = (befPath, aftPath) => {
   const bef = getJsObject(befPath);
   const aft = getJsObject(aftPath);
-  const lineBreak = '\n';
 
-  const removedAndChangedDiffs = Object.entries(bef).reduce((acc, [key, val]) => {
-    if (!has(aft, key)) {
-      return [...acc, makeDiff(key, val, '-')];
-    }
+  const keys = uniq([...Object.keys(bef), ...Object.keys(aft)]);
 
-    if (isEqual(aft[key], val)) {
-      return [...acc, makeDiff(key, val)];
-    }
-
-    return [
-      ...acc,
-      makeDiff(key, aft[key], '+'),
-      makeDiff(key, val, '-'),
-    ];
-  }, []);
-
-  const diffs = Object.entries(aft).reduce((acc, [key, val]) => {
+  const diffs = keys.reduce((acc, key) => {
     if (!has(bef, key)) {
-      return [...acc, makeDiff(key, val, '+')];
+      return [...acc, makeDiff(key, aft[key], diffTypes.added)];
     }
 
-    return acc;
-  }, removedAndChangedDiffs);
+    if (!has(aft, key)) {
+      return [...acc, makeDiff(key, bef[key], diffTypes.removed)];
+    }
 
-  const output = `{${lineBreak}${diffs.join(lineBreak)}${lineBreak}}`;
-  return output;
+    const newDiff = isEqual(bef[key], aft[key])
+      ? makeDiff(key, bef[key], diffTypes.unchanged)
+      : [makeDiff(key, aft[key], diffTypes.added), makeDiff(key, bef[key], diffTypes.removed)];
+
+    return [...acc, newDiff];
+  }, []).flat();
+
+  return toString(diffs);
 };
 
 export default genDiff;
