@@ -24,12 +24,18 @@ const getSign = (type) => {
 
 const makeDiff = (key, value, type) => ({ key, value, type });
 
-const toString = (diffs) => {
-  const diffToString = ({ key, value, type }) => (
-    `  ${getSign(type)} ${key}: ${value}`
-  );
+const diffToStr = ({ key, value, type }) => `${getSign(type)} ${key}: ${value}`;
 
-  return `{\n${diffs.map(diffToString).join('\n')}\n}`;
+const indentStr = (str, count) => `${' '.repeat(count)}${str}`;
+
+const toString = (diffs) => {
+  const diffStrings = diffs
+    .map(diffToStr)
+    .map((diffStr) => indentStr(diffStr, 2))
+    .join('\n');
+
+  const wrapped = `{\n${diffStrings}\n}`;
+  return wrapped;
 };
 
 const genDiff = (befPath, aftPath) => {
