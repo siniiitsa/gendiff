@@ -1,6 +1,5 @@
 import path from 'path';
 import program from 'commander';
-
 import genDiff from './gendiff.js';
 
 // basics
