@@ -27,6 +27,7 @@
   "homepage": "https://github.com/siniiitsa/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^5.0.0",
+    "js-yaml": "^3.13.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
