@@ -24,14 +24,17 @@ const getSign = (type) => {
 
 const makeDiff = (key, value, type) => ({ key, value, type });
 
-const diffToStr = ({ key, value, type }) => `${getSign(type)} ${key}: ${value}`;
+const diffToStr = (diff, indentCount = 0) => {
+  const { key, value, type } = diff;
+  const indent = ' '.repeat(indentCount);
+  const sign = getSign(type);
 
-const indent = (str, count) => `${' '.repeat(count)}${str}`;
+  return `${indent}${sign} ${key}: ${value}`;
+};
 
 const toString = (diffs) => {
   const diffStrings = diffs
-    .map(diffToStr)
-    .map((diffStr) => indent(diffStr, 2))
+    .map((diff) => diffToStr(diff, 2))
     .join('\n');
 
   const wrapped = `{\n${diffStrings}\n}`;
