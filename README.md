@@ -6,4 +6,7 @@ a cli app that compares two configuration files and shows a difference.
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c9931ddd90cd1bd16cd/maintainability)](https://codeclimate.com/github/siniiitsa/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/4c9931ddd90cd1bd16cd/test_coverage)](https://codeclimate.com/github/siniiitsa/frontend-project-lvl2/test_coverage)
 
-[step 3 asciinema](https://asciinema.org/a/Z9sQBqOq5EFebECBOBW8VftWt)
+## Asciinemas
+
+- [flat JSON files](https://asciinema.org/a/Z9sQBqOq5EFebECBOBW8VftWt)
+- [flat YAML files](https://asciinema.org/a/xUcmBl93g8X8PtllGe0SFIZW2)
