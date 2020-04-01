@@ -11,10 +11,18 @@ const readFile = (filename) => (
   fs.readFileSync(getFixturePath(filename), 'utf-8')
 );
 
-test('compare flat JSON files', async () => {
+const result = readFile('result.txt');
+
+test('compare flat JSON files', () => {
   const jsonBefore = getFixturePath('before.json');
   const jsonAfter = getFixturePath('after.json');
-  const result = await readFile('result.txt');
 
   expect(genDiff(jsonBefore, jsonAfter)).toBe(result);
+});
+
+test('compare flat YAML files', () => {
+  const yamlBefore = getFixturePath('before.yml');
+  const yamlAfter = getFixturePath('after.yml');
+
+  expect(genDiff(yamlBefore, yamlAfter)).toBe(result);
 });
