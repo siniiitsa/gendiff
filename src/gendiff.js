@@ -1,7 +1,12 @@
 import { has, isEqual, uniq } from 'lodash';
 import fs from 'fs';
+import path from 'path';
+import getParser from './parsers.js';
 
-const getJsObject = (path) => JSON.parse(fs.readFileSync(path));
+const getJsObject = (filePath) => {
+  const parse = getParser(path.extname(filePath));
+  return parse(fs.readFileSync(filePath, 'utf8'));
+};
 
 const diffTypes = {
   unchanged: 'unchanged',
