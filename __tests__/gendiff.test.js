@@ -14,15 +14,15 @@ const readFile = (filename) => (
 const result = readFile('result.txt');
 
 test('compare flat JSON files', () => {
-  const jsonBefore = getFixturePath('before.json');
-  const jsonAfter = getFixturePath('after.json');
+  const pathBefore = getFixturePath('before.json');
+  const pathAfter = getFixturePath('after.json');
 
-  expect(genDiff(jsonBefore, jsonAfter)).toBe(result);
+  expect(genDiff(pathBefore, pathAfter)).toBe(result);
 });
 
 test('compare flat YAML files', () => {
-  const yamlBefore = getFixturePath('before.yml');
-  const yamlAfter = getFixturePath('after.yml');
+  const pathBefore = getFixturePath('before.yml');
+  const pathAfter = getFixturePath('after.yml');
 
-  expect(genDiff(yamlBefore, yamlAfter)).toBe(result);
+  expect(genDiff(pathBefore, pathAfter)).toBe(result);
 });
