@@ -13,23 +13,14 @@ const readFile = (filename) => (
 
 const result = readFile('result.txt');
 
-test('compare flat JSON files', () => {
-  const pathBefore = getFixturePath('before.json');
-  const pathAfter = getFixturePath('after.json');
+test.each`
+  before           | after           | expected  | format
+  ${'before.json'} | ${'after.json'} | ${result} | ${'JSON'}
+  ${'before.yml'}  | ${'after.yml'}  | ${result} | ${'YAML'}
+  ${'before.ini'}  | ${'after.ini'}  | ${result} | ${'INI'}
+`('compare flat $format files', ({ before, after, expected }) => {
+  const pathBefore = getFixturePath(before);
+  const pathAfter = getFixturePath(after);
 
-  expect(genDiff(pathBefore, pathAfter)).toBe(result);
-});
-
-test('compare flat YAML files', () => {
-  const pathBefore = getFixturePath('before.yml');
-  const pathAfter = getFixturePath('after.yml');
-
-  expect(genDiff(pathBefore, pathAfter)).toBe(result);
-});
-
-test('compare flat INI files', () => {
-  const pathBefore = getFixturePath('before.ini');
-  const pathAfter = getFixturePath('after.ini');
-
-  expect(genDiff(pathBefore, pathAfter)).toBe(result);
+  expect(genDiff(pathBefore, pathAfter)).toBe(expected);
 });
