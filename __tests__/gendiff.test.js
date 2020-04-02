@@ -26,3 +26,10 @@ test('compare flat YAML files', () => {
 
   expect(genDiff(pathBefore, pathAfter)).toBe(result);
 });
+
+test('compare flat INI files', () => {
+  const pathBefore = getFixturePath('before.ini');
+  const pathAfter = getFixturePath('after.ini');
+
+  expect(genDiff(pathBefore, pathAfter)).toBe(result);
+});
