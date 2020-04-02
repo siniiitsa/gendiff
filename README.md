@@ -10,3 +10,4 @@ a cli app that compares two configuration files and shows a difference.
 
 - [flat JSON files](https://asciinema.org/a/Z9sQBqOq5EFebECBOBW8VftWt)
 - [flat YAML files](https://asciinema.org/a/xUcmBl93g8X8PtllGe0SFIZW2)
+- [flat INI files](https://asciinema.org/a/vUaNaBjvhJxIJ0E3NBxaY91L8)
