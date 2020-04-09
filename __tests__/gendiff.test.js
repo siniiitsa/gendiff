@@ -18,7 +18,7 @@ test.each`
   ${'.json'}
   ${'.yml'}
   ${'.ini'}
-`('compare flat $ext files', ({ ext }) => {
+`('compare $ext files', ({ ext }) => {
   const pathBefore = getFixturePath(`before${ext}`);
   const pathAfter = getFixturePath(`after${ext}`);
 
