@@ -13,3 +13,4 @@ parserOptions:
 rules:
   no-console: 0
   import/extensions: 0
+  object-curly-newline: 0
