@@ -48,7 +48,10 @@ const stringify = (diffColl) => {
       const sign = getSign(type);
 
       if (children) {
-        const formatedValue = wrapWithCurlyBraces(iter(children, indentCount + 4), indentCount + 2);
+        const formatedValue = wrapWithCurlyBraces(
+          iter(children, indentCount + 4),
+          indentCount + 2,
+        );
         return `${indent}${sign} ${key}: ${formatedValue}`;
       }
 
