@@ -24,7 +24,7 @@ const makeDiffsColl = (bef, aft) => {
     }
 
     if (!has(aft, key)) {
-      return [...acc, makeDiff('removed', key, bef[key])];
+      return [...acc, makeDiff('deleted', key, bef[key])];
     }
 
     if (isObject(bef[key]) && isObject(aft[key])) {
@@ -34,7 +34,7 @@ const makeDiffsColl = (bef, aft) => {
 
     const newDiff = isEqual(bef[key], aft[key])
       ? makeDiff('unchanged', key, bef[key])
-      : [makeDiff('removed', key, bef[key]), makeDiff('added', key, aft[key])];
+      : [makeDiff('deleted', key, bef[key]), makeDiff('added', key, aft[key])];
 
     return [...acc, newDiff].flat();
   }, []);

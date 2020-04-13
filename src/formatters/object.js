@@ -20,7 +20,7 @@ const getSign = (type) => {
     unchanged: ' ',
     changed: ' ',
     added: '+',
-    removed: '-',
+    deleted: '-',
   };
 
   return signs[type] || null;
