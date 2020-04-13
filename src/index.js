@@ -13,14 +13,14 @@ program
 
 // options
 program
-  .option('-f, --format [type]', 'output format');
+  .option('-f, --format [type]', 'output format', 'object');
 
 // actions
 program
   .action((firstConfig, secondConfig) => {
     const path1 = path.resolve(firstConfig);
     const path2 = path.resolve(secondConfig);
-    const diff = genDiff(path1, path2);
+    const diff = genDiff(path1, path2, program.format);
     console.log(diff);
   });
 
