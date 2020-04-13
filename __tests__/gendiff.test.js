@@ -11,9 +11,10 @@ const readFile = (filename) => (
   fs.readFileSync(getFixturePath(filename), 'utf-8')
 );
 
-const result = readFile('result.txt');
+const resultObject = readFile('result-object.txt');
+const resultPlain = readFile('result-plain.txt');
 
-test.each`
+describe.each`
   ext        
   ${'.json'}
   ${'.yml'}
@@ -22,5 +23,11 @@ test.each`
   const pathBefore = getFixturePath(`before${ext}`);
   const pathAfter = getFixturePath(`after${ext}`);
 
-  expect(genDiff(pathBefore, pathAfter)).toBe(result);
+  test('--format "object"', () => {
+    expect(genDiff(pathBefore, pathAfter, 'object')).toBe(resultObject);
+  });
+
+  test('--format "plain"', () => {
+    expect(genDiff(pathBefore, pathAfter, 'plain')).toBe(resultPlain);
+  });
 });
