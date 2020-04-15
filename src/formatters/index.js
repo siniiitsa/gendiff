@@ -1,9 +1,9 @@
-import formatAsJsObject from './object.js';
+import formatAsObject from './object.js';
 import formatAsPlain from './plain.js';
 
 const getFormatter = (format) => {
   const formatters = {
-    object: formatAsJsObject,
+    object: formatAsObject,
     plain: formatAsPlain,
   };
 
