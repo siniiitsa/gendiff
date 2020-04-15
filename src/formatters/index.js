@@ -1,9 +1,9 @@
-import formatAsObject from './object.js';
+import formatAsTree from './tree.js';
 import formatAsPlain from './plain.js';
 
 const getFormatter = (format) => {
   const formatters = {
-    object: formatAsObject,
+    tree: formatAsTree,
     plain: formatAsPlain,
   };
 

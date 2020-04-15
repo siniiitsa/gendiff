@@ -26,7 +26,7 @@ const getSign = (type) => {
   return signs[type] || null;
 };
 
-const formatAsObject = (diffColl) => {
+const formatAsTree = (diffColl) => {
   const iter = (diffs, indentCount) => {
     const indent = ' '.repeat(indentCount);
     const diffToString = ({ key, value, type, children }) => {
@@ -57,4 +57,4 @@ const formatAsObject = (diffColl) => {
   return wrapCurly(iter(diffColl, 2));
 };
 
-export default formatAsObject;
+export default formatAsTree;

@@ -11,7 +11,7 @@ const readFile = (filename) => (
   fs.readFileSync(getFixturePath(filename), 'utf-8')
 );
 
-const resultObject = readFile('result-object.txt');
+const resultTree = readFile('result-tree.txt');
 const resultPlain = readFile('result-plain.txt');
 
 describe.each`
@@ -23,8 +23,8 @@ describe.each`
   const pathBefore = getFixturePath(`before${ext}`);
   const pathAfter = getFixturePath(`after${ext}`);
 
-  test('--format "object"', () => {
-    expect(genDiff(pathBefore, pathAfter, 'object')).toBe(resultObject);
+  test('--format "tree"', () => {
+    expect(genDiff(pathBefore, pathAfter, 'tree')).toBe(resultTree);
   });
 
   test('--format "plain"', () => {

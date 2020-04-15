@@ -13,7 +13,7 @@ program
 
 // options
 program
-  .option('-f, --format [type]', 'output format', 'object');
+  .option('-f, --format [type]', 'output format', 'tree');
 
 // actions
 program
