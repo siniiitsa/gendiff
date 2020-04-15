@@ -1,6 +1,6 @@
 import isObject from '../helpers.js';
 
-const wrapWithCurlyBraces = (string, indentCount = 0) => {
+const wrapCurly = (string, indentCount = 0) => {
   const indent = ' '.repeat(indentCount);
   return `{\n${string}\n${indent}}`;
 };
@@ -12,7 +12,7 @@ const objectToString = (object, indentCount) => {
     .map(([key, val]) => `${indent}${key}: ${val}`)
     .join('\n');
 
-  return wrapWithCurlyBraces(pairsString, indentCount);
+  return wrapCurly(pairsString, indentCount);
 };
 
 const getSign = (type) => {
@@ -26,14 +26,14 @@ const getSign = (type) => {
   return signs[type] || null;
 };
 
-const formatAsJsObject = (diffColl) => {
+const formatAsObject = (diffColl) => {
   const iter = (diffs, indentCount) => {
     const indent = ' '.repeat(indentCount);
     const diffToString = ({ key, value, type, children }) => {
       const sign = getSign(type);
 
       if (children) {
-        const formatedValue = wrapWithCurlyBraces(
+        const formatedValue = wrapCurly(
           iter(children, indentCount + 4),
           indentCount + 2,
         );
@@ -54,7 +54,7 @@ const formatAsJsObject = (diffColl) => {
     return diffString;
   };
 
-  return wrapWithCurlyBraces(iter(diffColl, 2));
+  return wrapCurly(iter(diffColl, 2));
 };
 
-export default formatAsJsObject;
+export default formatAsObject;
