@@ -7,39 +7,44 @@ import isObject from './helpers.js';
 
 const getJsObject = (filePath) => {
   const parse = getParser(path.extname(filePath));
-  return parse(fs.readFileSync(filePath, 'utf8'));
+  const data = fs.readFileSync(filePath, 'utf8');
+  return parse(data);
 };
 
-const makeDiff = (type, key, value, children) => {
-  const diff = { type, key, value, children: children || null };
-  return diff;
+const makeNode = (type, key, value, children) => {
+  const node = { type, key, value, children: children || null };
+  return node;
 };
 
-const makeDiffsColl = (bef, aft) => {
+const makeAst = (bef, aft) => {
   const keys = uniq([...Object.keys(bef), ...Object.keys(aft)]).sort();
 
-  const coll = keys.reduce((acc, key) => {
+  const ast = keys.reduce((acc, key) => {
     if (!has(bef, key)) {
-      return [...acc, makeDiff('added', key, aft[key])];
+      return [...acc, makeNode('added', key, aft[key])];
     }
 
     if (!has(aft, key)) {
-      return [...acc, makeDiff('deleted', key, bef[key])];
+      return [...acc, makeNode('deleted', key, bef[key])];
     }
 
     if (isObject(bef[key]) && isObject(aft[key])) {
-      const children = makeDiffsColl(bef[key], aft[key]);
-      return [...acc, makeDiff('changed', key, null, children)];
+      const children = makeAst(bef[key], aft[key]);
+      return [...acc, makeNode('changed', key, null, children)];
     }
 
-    const newDiff = isEqual(bef[key], aft[key])
-      ? makeDiff('unchanged', key, bef[key])
-      : [makeDiff('deleted', key, bef[key]), makeDiff('added', key, aft[key])];
+    if (isEqual(bef[key], aft[key])) {
+      return [...acc, makeNode('unchanged', key, bef[key])];
+    }
 
-    return [...acc, newDiff].flat();
+    return [
+      ...acc,
+      makeNode('deleted', key, bef[key]),
+      makeNode('added', key, aft[key]),
+    ];
   }, []);
 
-  return coll;
+  return ast;
 };
 
 const genDiff = (befPath, aftPath, format) => {
@@ -47,9 +52,9 @@ const genDiff = (befPath, aftPath, format) => {
   const aft = getJsObject(aftPath);
 
   const stringify = getFormatter(format);
-  const diffsColl = makeDiffsColl(bef, aft);
+  const ast = makeAst(bef, aft);
 
-  return stringify(diffsColl);
+  return stringify(ast);
 };
 
 export default genDiff;
