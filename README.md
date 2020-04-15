@@ -8,6 +8,5 @@ a cli app that compares two configuration files and shows a difference.
 
 ## Asciinemas
 
-- [flat JSON files](https://asciinema.org/a/Z9sQBqOq5EFebECBOBW8VftWt)
-- [flat YAML files](https://asciinema.org/a/xUcmBl93g8X8PtllGe0SFIZW2)
-- [flat INI files](https://asciinema.org/a/vUaNaBjvhJxIJ0E3NBxaY91L8)
+- [--format flat](https://asciinema.org/a/EL4IfZVnbWd9GsbsFav8jZt7H)
+- [--format object](https://asciinema.org/a/a9aPI8yzUW9L23ZW7np5XcF6R)
