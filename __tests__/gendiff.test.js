@@ -13,6 +13,7 @@ const readFile = (filename) => (
 
 const resultTree = readFile('result-tree.txt');
 const resultPlain = readFile('result-plain.txt');
+const resultJson = readFile('result-json.json');
 
 describe.each`
   ext        
@@ -29,5 +30,9 @@ describe.each`
 
   test('--format "plain"', () => {
     expect(genDiff(pathBefore, pathAfter, 'plain')).toBe(resultPlain);
+  });
+
+  test('--format "json"', () => {
+    expect(genDiff(pathBefore, pathAfter, 'json')).toBe(resultJson);
   });
 });
