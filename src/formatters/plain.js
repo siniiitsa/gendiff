@@ -12,7 +12,7 @@ const formatValue = (value) => {
   return value;
 };
 
-const makeLine = ({ status, path, value, oldValue, newValue }) => {
+const itemToString = ({ status, path, value, oldValue, newValue }) => {
   switch (status) {
     case 'deleted':
       return `Property '${path}' was deleted`;
@@ -75,7 +75,7 @@ const formatAsPlain = (ast) => {
     .flat(Infinity)
     .filter(Boolean)
     .reduce(groupChangedItems, [])
-    .map(makeLine)
+    .map(itemToString)
     .join('\n');
 };
 
