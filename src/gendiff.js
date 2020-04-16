@@ -11,37 +11,34 @@ const getJsObject = (filePath) => {
   return parse(data);
 };
 
-const makeNode = (status, key, value, children) => {
-  const node = { status, key, value, children: children || null };
-  return node;
-};
-
 const makeAst = (bef, aft) => {
   const keys = uniq([...Object.keys(bef), ...Object.keys(aft)]).sort();
 
   const ast = keys.reduce((acc, key) => {
     if (!has(bef, key)) {
-      return [...acc, makeNode('added', key, aft[key])];
+      const addedNode = { status: 'added', key, value: aft[key] };
+      return [...acc, addedNode];
     }
 
     if (!has(aft, key)) {
-      return [...acc, makeNode('deleted', key, bef[key])];
+      const deletedNode = { status: 'deleted', key, value: bef[key] };
+      return [...acc, deletedNode];
     }
 
     if (isObject(bef[key]) && isObject(aft[key])) {
       const children = makeAst(bef[key], aft[key]);
-      return [...acc, makeNode('changed', key, null, children)];
+      const changedNode = { status: 'changed', key, children };
+      return [...acc, changedNode];
     }
 
     if (isEqual(bef[key], aft[key])) {
-      return [...acc, makeNode('unchanged', key, bef[key])];
+      const unchangedNode = { status: 'unchanged', key, value: bef[key] };
+      return [...acc, unchangedNode];
     }
 
-    return [
-      ...acc,
-      makeNode('deleted', key, bef[key]),
-      makeNode('added', key, aft[key]),
-    ];
+    const deletedNode = { status: 'deleted', key, value: bef[key] };
+    const addedNode = { status: 'added', key, value: aft[key] };
+    return [...acc, deletedNode, addedNode];
   }, []);
 
   return ast;
@@ -54,7 +51,7 @@ const genDiff = (befPath, aftPath, format) => {
   const stringify = getFormatter(format);
   const ast = makeAst(bef, aft);
 
-  console.log(JSON.stringify(ast, null, 2));
+  // console.log(JSON.stringify(ast, null, 2));
 
   return stringify(ast);
 };
