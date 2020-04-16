@@ -12,8 +12,8 @@ const formatValue = (value) => {
   return value;
 };
 
-const makeLine = ({ type, path, value, oldValue, newValue }) => {
-  switch (type) {
+const makeLine = ({ status, path, value, oldValue, newValue }) => {
+  switch (status) {
     case 'deleted':
       return `Property '${path}' was deleted`;
     case 'added':
@@ -29,7 +29,7 @@ const groupChangedItems = (acc, item, index, items) => {
   if ((index < items.length - 1) && items[index + 1].path === item.path) {
     const newItem = {
       ...item,
-      type: 'changed',
+      status: 'changed',
       oldValue: item.value,
       newValue: items[index + 1].value,
     };
@@ -44,33 +44,33 @@ const groupChangedItems = (acc, item, index, items) => {
   return [...acc, item];
 };
 
-const makeDiffItem = (type, path, value) => ({ type, path, value });
+const makeDiffItem = (status, path, value) => ({ status, path, value });
 
-const formatAsPlain = (diffs) => {
+const formatAsPlain = (ast) => {
   const iter = (node, pathAcc) => {
-    const { key, value, type, children } = node;
+    const { key, value, status, children } = node;
     const currentPath = pathAcc.length > 0 ? `${pathAcc}.${key}` : key;
 
-    if (type === 'unchanged') {
+    if (status === 'unchanged') {
       return null;
     }
 
-    if (type === 'deleted') {
-      return makeDiffItem(type, currentPath, value);
+    if (status === 'deleted') {
+      return makeDiffItem(status, currentPath, value);
     }
 
-    if (type === 'added') {
-      return makeDiffItem(type, currentPath, value);
+    if (status === 'added') {
+      return makeDiffItem(status, currentPath, value);
     }
 
     if (value && !children) {
-      return makeDiffItem(type, currentPath, value);
+      return makeDiffItem(status, currentPath, value);
     }
 
     return children.map((child) => iter(child, currentPath));
   };
 
-  return diffs
+  return ast
     .map((diff) => iter(diff, ''))
     .flat(Infinity)
     .filter(Boolean)

@@ -15,7 +15,7 @@ const objectToString = (object, indentCount) => {
   return wrapCurly(pairsString, indentCount);
 };
 
-const getSign = (type) => {
+const getSign = (status) => {
   const signs = {
     unchanged: ' ',
     changed: ' ',
@@ -23,14 +23,14 @@ const getSign = (type) => {
     deleted: '-',
   };
 
-  return signs[type] || null;
+  return signs[status] || null;
 };
 
-const formatAsTree = (diffColl) => {
+const formatAsTree = (ast) => {
   const iter = (diffs, indentCount) => {
     const indent = ' '.repeat(indentCount);
-    const diffToString = ({ key, value, type, children }) => {
-      const sign = getSign(type);
+    const diffToString = ({ key, value, status, children }) => {
+      const sign = getSign(status);
 
       if (children) {
         const formatedValue = wrapCurly(
@@ -54,7 +54,7 @@ const formatAsTree = (diffColl) => {
     return diffString;
   };
 
-  return wrapCurly(iter(diffColl, 2));
+  return wrapCurly(iter(ast, 2));
 };
 
 export default formatAsTree;

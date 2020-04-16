@@ -11,8 +11,8 @@ const getJsObject = (filePath) => {
   return parse(data);
 };
 
-const makeNode = (type, key, value, children) => {
-  const node = { type, key, value, children: children || null };
+const makeNode = (status, key, value, children) => {
+  const node = { status, key, value, children: children || null };
   return node;
 };
 
