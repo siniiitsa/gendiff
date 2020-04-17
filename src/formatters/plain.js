@@ -21,7 +21,7 @@ const itemToString = ({ status, path, value, oldValue, newValue }) => {
     case 'changed':
       return `Property '${path}' was changed from ${formatValue(oldValue)} to ${formatValue(newValue)}`;
     default:
-      return null;
+      throw new Error(`Unknown ast node status: "${status}".`);
   }
 };
 
@@ -55,19 +55,11 @@ const formatAsPlain = (ast) => {
       return null;
     }
 
-    if (status === 'deleted') {
-      return makeDiffItem(status, currentPath, value);
+    if (children) {
+      return children.map((child) => iter(child, currentPath));
     }
 
-    if (status === 'added') {
-      return makeDiffItem(status, currentPath, value);
-    }
-
-    if (value && !children) {
-      return makeDiffItem(status, currentPath, value);
-    }
-
-    return children.map((child) => iter(child, currentPath));
+    return makeDiffItem(status, currentPath, value);
   };
 
   return ast
