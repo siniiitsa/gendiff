@@ -4,10 +4,8 @@ import { cloneDeepWith } from 'lodash';
 
 const parseIni = (data) => {
   const normalizeNumbers = (value) => {
-    if (typeof value === 'string') {
-      return +value || undefined;
-    }
-    return undefined;
+    const shouldBeNumber = (typeof value === 'string') && Number(value);
+    return shouldBeNumber ? Number(value) : undefined;
   };
 
   const obj = ini.parse(data);
@@ -23,7 +21,7 @@ const getParser = (extname) => {
     case '.ini':
       return parseIni;
     default:
-      return null;
+      throw new Error(`Unsupported file format: "${extname}". Gendiff only works with ".json", ".yml", ".ini" files.`);
   }
 };
 
