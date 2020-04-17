@@ -51,8 +51,6 @@ const genDiff = (befPath, aftPath, format) => {
   const stringify = getFormatter(format);
   const ast = makeAst(bef, aft);
 
-  // console.log(JSON.stringify(ast, null, 2));
-
   return stringify(ast);
 };
 
