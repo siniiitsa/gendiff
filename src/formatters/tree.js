@@ -29,7 +29,7 @@ const getSign = (status) => {
 const formatAsTree = (ast) => {
   const iter = (diffs, indentCount) => {
     const indent = ' '.repeat(indentCount);
-    const diffToString = ({ key, value, status, children }) => {
+    const nodeToString = ({ key, value, status, children }) => {
       const sign = getSign(status);
 
       if (children) {
@@ -37,6 +37,7 @@ const formatAsTree = (ast) => {
           iter(children, indentCount + 4),
           indentCount + 2,
         );
+
         return `${indent}${sign} ${key}: ${formatedValue}`;
       }
 
@@ -48,7 +49,7 @@ const formatAsTree = (ast) => {
     };
 
     const diffString = diffs
-      .map(diffToString)
+      .map(nodeToString)
       .join('\n');
 
     return diffString;
