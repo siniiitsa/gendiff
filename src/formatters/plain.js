@@ -26,25 +26,25 @@ const itemToString = ({ status, path, value, oldValue, newValue }) => {
 };
 
 const groupChangedItems = (acc, item, index, items) => {
-  if ((index < items.length - 1) && items[index + 1].path === item.path) {
-    const newItem = {
+  const isFirstCompoundItem = (index < items.length - 1) && (items[index + 1].path === item.path);
+  if (isFirstCompoundItem) {
+    const combinedItem = {
       ...item,
       status: 'changed',
       oldValue: item.value,
       newValue: items[index + 1].value,
     };
 
-    return [...acc, newItem];
+    return [...acc, combinedItem];
   }
 
-  if ((index !== 0) && items[index - 1].path === item.path) {
+  const isSecondCompoundItem = (index !== 0) && (items[index - 1].path === item.path);
+  if (isSecondCompoundItem) {
     return acc;
   }
 
   return [...acc, item];
 };
-
-const makeDiffItem = (status, path, value) => ({ status, path, value });
 
 const formatAsPlain = (ast) => {
   const iter = (node, pathAcc) => {
@@ -59,16 +59,18 @@ const formatAsPlain = (ast) => {
       return children.map((child) => iter(child, currentPath));
     }
 
-    return makeDiffItem(status, currentPath, value);
+    return { status, path: currentPath, value };
   };
 
-  return ast
-    .map((diff) => iter(diff, ''))
+  const plainDiff = ast
+    .map((node) => iter(node, ''))
     .flat(Infinity)
     .filter(Boolean)
     .reduce(groupChangedItems, [])
     .map(itemToString)
     .join('\n');
+
+  return plainDiff;
 };
 
 export default formatAsPlain;
