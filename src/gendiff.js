@@ -11,33 +11,33 @@ const getJsObject = (filePath) => {
   return parse(data);
 };
 
-const makeAst = (bef, aft) => {
-  const keys = uniq([...Object.keys(bef), ...Object.keys(aft)]).sort();
+const makeAst = (config1, config2) => {
+  const keys = uniq([...Object.keys(config1), ...Object.keys(config2)]).sort();
 
   const ast = keys.reduce((acc, key) => {
-    if (!has(bef, key)) {
-      const addedNode = { status: 'added', key, value: aft[key] };
+    if (!has(config1, key)) {
+      const addedNode = { status: 'added', key, value: config2[key] };
       return [...acc, addedNode];
     }
 
-    if (!has(aft, key)) {
-      const deletedNode = { status: 'deleted', key, value: bef[key] };
+    if (!has(config2, key)) {
+      const deletedNode = { status: 'deleted', key, value: config1[key] };
       return [...acc, deletedNode];
     }
 
-    if (isObject(bef[key]) && isObject(aft[key])) {
-      const children = makeAst(bef[key], aft[key]);
+    if (isObject(config1[key]) && isObject(config2[key])) {
+      const children = makeAst(config1[key], config2[key]);
       const changedNode = { status: 'changed', key, children };
       return [...acc, changedNode];
     }
 
-    if (isEqual(bef[key], aft[key])) {
-      const unchangedNode = { status: 'unchanged', key, value: bef[key] };
+    if (isEqual(config1[key], config2[key])) {
+      const unchangedNode = { status: 'unchanged', key, value: config1[key] };
       return [...acc, unchangedNode];
     }
 
-    const deletedNode = { status: 'deleted', key, value: bef[key] };
-    const addedNode = { status: 'added', key, value: aft[key] };
+    const deletedNode = { status: 'deleted', key, value: config1[key] };
+    const addedNode = { status: 'added', key, value: config2[key] };
     return [...acc, deletedNode, addedNode];
   }, []);
 
@@ -45,11 +45,11 @@ const makeAst = (bef, aft) => {
 };
 
 const genDiff = (befPath, aftPath, format) => {
-  const bef = getJsObject(befPath);
-  const aft = getJsObject(aftPath);
+  const config1 = getJsObject(befPath);
+  const config2 = getJsObject(aftPath);
 
   const stringify = getFormatter(format);
-  const ast = makeAst(bef, aft);
+  const ast = makeAst(config1, config2);
 
   return stringify(ast);
 };
