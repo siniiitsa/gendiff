@@ -26,8 +26,8 @@ const itemToString = ({ status, path, value, oldValue, newValue }) => {
 };
 
 const groupChangedItems = (acc, item, index, items) => {
-  const isFirstCompoundItem = (index < items.length - 1) && (items[index + 1].path === item.path);
-  if (isFirstCompoundItem) {
+  const isFirstPairItem = (index < items.length - 1) && (items[index + 1].path === item.path);
+  if (isFirstPairItem) {
     const combinedItem = {
       ...item,
       status: 'changed',
@@ -38,8 +38,8 @@ const groupChangedItems = (acc, item, index, items) => {
     return [...acc, combinedItem];
   }
 
-  const isSecondCompoundItem = (index !== 0) && (items[index - 1].path === item.path);
-  if (isSecondCompoundItem) {
+  const isSecondPairItem = (index !== 0) && (items[index - 1].path === item.path);
+  if (isSecondPairItem) {
     return acc;
   }
 
