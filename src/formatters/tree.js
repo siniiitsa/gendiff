@@ -1,4 +1,4 @@
-import isObject from '../helpers.js';
+import { isObject } from '../helpers.js';
 
 const wrapCurly = (string, indentCount = 0) => {
   const indent = ' '.repeat(indentCount);

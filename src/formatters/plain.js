@@ -1,4 +1,4 @@
-import isObject from '../helpers.js';
+import { isObject } from '../helpers.js';
 
 const formatValue = (value) => {
   if (isObject(value)) {

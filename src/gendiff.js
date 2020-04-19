@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import getParser from './parsers.js';
 import getFormatter from './formatters/index.js';
-import isObject from './helpers.js';
+import { isObject } from './helpers.js';
 
 const getJsObject = (filePath) => {
   const parse = getParser(path.extname(filePath));

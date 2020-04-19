@@ -5,4 +5,4 @@ const isObject = (value) => {
   return typeof value === 'object';
 };
 
-export default isObject;
+export { isObject };
