@@ -12,8 +12,8 @@ const parseIni = (data) => {
   return cloneDeepWith(obj, normalizeNumbers);
 };
 
-const getParser = (extname) => {
-  switch (extname) {
+const getParser = (format) => {
+  switch (format) {
     case '.json':
       return JSON.parse;
     case '.yml':
@@ -21,7 +21,7 @@ const getParser = (extname) => {
     case '.ini':
       return parseIni;
     default:
-      throw new Error(`Unsupported file format: "${extname}". Gendiff only works with ".json", ".yml", ".ini" files.`);
+      throw new Error(`Unsupported file format: "${format}". Gendiff only works with ".json", ".yml", ".ini" formats.`);
   }
 };
 

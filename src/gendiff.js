@@ -10,11 +10,14 @@ import getParser from './parsers.js';
 import getFormatter from './formatters/index.js';
 import { isObject } from './helpers.js';
 
-const getJsObject = (filePath) => {
-  const parse = getParser(path.extname(filePath));
-  const data = fs.readFileSync(filePath, 'utf8');
-  return parse(data);
+const getFileData = (filePath) => {
+  const fullFilePath = path.resolve(filePath);
+  return fs.readFileSync(fullFilePath, 'utf8');
 };
+
+const getFileFormat = (fileName) => path.extname(fileName);
+
+const parse = (data, format) => getParser(format)(data);
 
 const makeAst = (config1, config2) => {
   const keys = uniq([...Object.keys(config1), ...Object.keys(config2)]).sort();
@@ -49,11 +52,14 @@ const makeAst = (config1, config2) => {
   return ast;
 };
 
-const genDiff = (befPath, aftPath, format) => {
-  const config1 = getJsObject(befPath);
-  const config2 = getJsObject(aftPath);
+const genDiff = (path1, path2, outputFormat) => {
+  const data1 = getFileData(path1);
+  const data2 = getFileData(path2);
 
-  const stringify = getFormatter(format);
+  const config1 = parse(data1, getFileFormat(path1));
+  const config2 = parse(data2, getFileFormat(path2));
+
+  const stringify = getFormatter(outputFormat);
   const ast = makeAst(config1, config2);
 
   return stringify(ast);
