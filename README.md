@@ -9,5 +9,5 @@ a cli app that compares two configuration files and shows a difference.
 ## Asciinemas
 
 - [--format flat](https://asciinema.org/a/EL4IfZVnbWd9GsbsFav8jZt7H)
-- [--format object](https://asciinema.org/a/a9aPI8yzUW9L23ZW7np5XcF6R)
+- [--format tree](https://asciinema.org/a/a9aPI8yzUW9L23ZW7np5XcF6R)
 - [--format json](https://asciinema.org/a/B9UR1wiuBZ5H6XrS0RyyvjVoi)
