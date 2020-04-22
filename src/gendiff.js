@@ -1,4 +1,9 @@
-import { has, isEqual, uniq } from 'lodash';
+import {
+  has,
+  isEqual,
+  union,
+  isPlainObject,
+} from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import getParser from './parsers.js';

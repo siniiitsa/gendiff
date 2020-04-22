@@ -1,4 +1,4 @@
-import { isObject } from '../helpers.js';
+import { isPlainObject } from 'lodash';
 
 const formatValue = (value) => {
   if (isObject(value)) {

@@ -1,4 +1,4 @@
-import { isObject } from '../helpers.js';
+import { isPlainObject } from 'lodash';
 
 const wrapCurly = (string, indentCount = 0) => {
   const indent = ' '.repeat(indentCount);
