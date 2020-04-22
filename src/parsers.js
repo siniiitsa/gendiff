@@ -8,8 +8,9 @@ const parseIni = (data) => {
     return shouldBeNumber ? Number(value) : undefined;
   };
 
-  const obj = ini.parse(data);
-  return cloneDeepWith(obj, normalizeNumbers);
+  const object = ini.parse(data);
+  const objectNormalized = cloneDeepWith(object, normalizeNumbers);
+  return objectNormalized;
 };
 
 const getParser = (format) => {
