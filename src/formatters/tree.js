@@ -81,7 +81,6 @@ const formatAsTree = (ast) => {
       .flat()
       .join('\n');
 
-    console.log(diffString);
     return diffString;
   };
 
