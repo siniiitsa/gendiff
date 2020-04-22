@@ -1,18 +1,19 @@
 import { isPlainObject } from 'lodash';
 
-const wrapCurly = (string, indentCount = 0) => {
-  const indent = ' '.repeat(indentCount);
+const makeIndent = (indentCount) => ' '.repeat(indentCount);
+
+const wrapWithBraces = (string, indentCount = 0) => {
+  const indent = makeIndent(indentCount);
   return `{\n${string}\n${indent}}`;
 };
 
 const objectToString = (object, indentCount) => {
-  const indent = ' '.repeat(indentCount + 4);
-
-  const pairsString = Object.entries(object)
-    .map(([key, val]) => `${indent}${key}: ${val}`)
+  const indent = makeIndent(indentCount + 4);
+  const keyValuePairsFormated = Object.entries(object)
+    .map(([key, value]) => `${indent}${key}: ${value}`)
     .join('\n');
 
-  return wrapCurly(pairsString, indentCount);
+  return wrapWithBraces(keyValuePairsFormated, indentCount);
 };
 
 const formatValue = (value, indentCount) => {
@@ -37,7 +38,7 @@ const getSign = (status) => {
 
 const formatAsTree = (ast) => {
   const iter = (diffs, indentCount) => {
-    const indent = ' '.repeat(indentCount);
+    const indent = makeIndent(indentCount);
 
     const nodeToString = ({
       key,
@@ -49,12 +50,12 @@ const formatAsTree = (ast) => {
     }) => {
       if (status === 'changed_children') {
         const sign = getSign(status);
-        const formatedValue = wrapCurly(
+        const valueFormated = wrapWithBraces(
           iter(children, indentCount + 4),
           indentCount + 2,
         );
 
-        return `${indent}${sign} ${key}: ${formatedValue}`;
+        return `${indent}${sign} ${key}: ${valueFormated}`;
       }
 
       if (status === 'changed_value') {
@@ -70,10 +71,10 @@ const formatAsTree = (ast) => {
         ];
       }
 
-      const formatedValue = formatValue(value, indentCount + 2);
+      const valueFormated = formatValue(value, indentCount + 2);
       const sign = getSign(status);
 
-      return `${indent}${sign} ${key}: ${formatedValue}`;
+      return `${indent}${sign} ${key}: ${valueFormated}`;
     };
 
     const diffString = diffs
@@ -84,7 +85,7 @@ const formatAsTree = (ast) => {
     return diffString;
   };
 
-  return wrapCurly(iter(ast, 2));
+  return wrapWithBraces(iter(ast, 2));
 };
 
 export default formatAsTree;
