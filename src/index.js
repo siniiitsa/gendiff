@@ -1,4 +1,3 @@
-import path from 'path';
 import program from 'commander';
 import genDiff from './gendiff.js';
 
@@ -13,10 +12,8 @@ program
   .option('-f, --format [type]', 'output format', 'tree');
 
 program
-  .action((firstConfig, secondConfig) => {
-    const path1 = path.resolve(firstConfig);
-    const path2 = path.resolve(secondConfig);
-    const diff = genDiff(path1, path2, program.format);
+  .action((firstConfigPath, secondConfigPath) => {
+    const diff = genDiff(firstConfigPath, secondConfigPath, program.format);
     console.log(diff);
   });
 
