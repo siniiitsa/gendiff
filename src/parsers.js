@@ -21,7 +21,7 @@ const getParser = (format) => {
     case '.ini':
       return parseIni;
     default:
-      throw new Error(`Unsupported file format: "${format}". Gendiff only works with ".json", ".yml", ".ini" formats.`);
+      throw new Error(`Unsupported format: "${format}". Supported formats: ".json", ".yml", ".ini".`);
   }
 };
 
