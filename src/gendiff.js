@@ -8,7 +8,6 @@ import fs from 'fs';
 import path from 'path';
 import getParser from './parsers.js';
 import getFormatter from './formatters/index.js';
-import { isObject } from './helpers.js';
 
 const getFileData = (filePath) => {
   const fullFilePath = path.resolve(filePath);
@@ -20,34 +19,39 @@ const getFileFormat = (fileName) => path.extname(fileName);
 const parse = (data, format) => getParser(format)(data);
 
 const makeAst = (config1, config2) => {
-  const keys = uniq([...Object.keys(config1), ...Object.keys(config2)]).sort();
+  const keys = union(Object.keys(config1), Object.keys(config2)).sort();
 
-  const ast = keys.reduce((acc, key) => {
+  const ast = keys.map((key) => {
     if (!has(config1, key)) {
-      const addedNode = { status: 'added', key, value: config2[key] };
-      return [...acc, addedNode];
+      const addedNode = { key, status: 'added', value: config2[key] };
+      return addedNode;
     }
 
     if (!has(config2, key)) {
-      const deletedNode = { status: 'deleted', key, value: config1[key] };
-      return [...acc, deletedNode];
-    }
-
-    if (isObject(config1[key]) && isObject(config2[key])) {
-      const children = makeAst(config1[key], config2[key]);
-      const changedNode = { status: 'changed', key, children };
-      return [...acc, changedNode];
+      const deletedNode = { key, status: 'deleted', value: config1[key] };
+      return deletedNode;
     }
 
     if (isEqual(config1[key], config2[key])) {
-      const unchangedNode = { status: 'unchanged', key, value: config1[key] };
-      return [...acc, unchangedNode];
+      const unchangedNode = { key, status: 'unchanged', value: config1[key] };
+      return unchangedNode;
     }
 
-    const deletedNode = { status: 'deleted', key, value: config1[key] };
-    const addedNode = { status: 'added', key, value: config2[key] };
-    return [...acc, deletedNode, addedNode];
-  }, []);
+    if (isPlainObject(config1[key]) && isPlainObject(config2[key])) {
+      const children = makeAst(config1[key], config2[key]);
+      const changedNode = { key, status: 'changed_children', children };
+      return changedNode;
+    }
+
+    const changedNode = {
+      key,
+      status: 'changed_value',
+      oldValue: config1[key],
+      newValue: config2[key],
+    };
+
+    return changedNode;
+  });
 
   return ast;
 };
