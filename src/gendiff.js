@@ -1,6 +1,5 @@
 import {
   has,
-  isEqual,
   union,
   isPlainObject,
 } from 'lodash';
@@ -47,7 +46,7 @@ const makeAst = (config1, config2) => {
       return deletedNode;
     }
 
-    if (isEqual(config1[key], config2[key])) {
+    if (config1[key] === config2[key]) {
       const unchangedNode = { key, status: 'unchanged', value: config1[key] };
       return unchangedNode;
     }
