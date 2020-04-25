@@ -15,14 +15,14 @@ const parseIni = (data) => {
 
 const getParser = (format) => {
   switch (format) {
-    case '.json':
+    case 'json':
       return JSON.parse;
-    case '.yml':
+    case 'yaml':
       return yaml.safeLoad;
-    case '.ini':
+    case 'ini':
       return parseIni;
     default:
-      throw new Error(`Unsupported format: "${format}". Supported formats: ".json", ".yml", ".ini".`);
+      throw new Error(`No parser for "${format}" format. Supported formats: "json", "yaml", "ini".`);
   }
 };
 

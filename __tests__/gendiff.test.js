@@ -24,15 +24,15 @@ describe.each`
   const pathBefore = getFixturePath(`before${ext}`);
   const pathAfter = getFixturePath(`after${ext}`);
 
-  test('--format "tree"', () => {
+  test('diff format "tree"', () => {
     expect(genDiff(pathBefore, pathAfter, 'tree')).toBe(resultTree);
   });
 
-  test('--format "plain"', () => {
+  test('diff format "plain"', () => {
     expect(genDiff(pathBefore, pathAfter, 'plain')).toBe(resultPlain);
   });
 
-  test('--format "json"', () => {
+  test('diff format "json"', () => {
     expect(genDiff(pathBefore, pathAfter, 'json')).toBe(resultJson);
   });
 });
