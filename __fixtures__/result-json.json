@@ -1,26 +1,26 @@
 [
   {
     "key": "common",
-    "status": "changed_children",
+    "type": "nested",
     "children": [
       {
         "key": "follow",
-        "status": "added",
+        "type": "added",
         "value": false
       },
       {
         "key": "setting1",
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "Value 1"
       },
       {
         "key": "setting2",
-        "status": "deleted",
+        "type": "deleted",
         "value": 200
       },
       {
         "key": "setting3",
-        "status": "changed_value",
+        "type": "changed",
         "oldValue": true,
         "newValue": {
           "key": "value"
@@ -28,28 +28,28 @@
       },
       {
         "key": "setting4",
-        "status": "added",
+        "type": "added",
         "value": "blah blah"
       },
       {
         "key": "setting5",
-        "status": "added",
+        "type": "added",
         "value": {
           "key5": "value5"
         }
       },
       {
         "key": "setting6",
-        "status": "changed_children",
+        "type": "nested",
         "children": [
           {
             "key": "key",
-            "status": "unchanged",
+            "type": "unchanged",
             "value": "value"
           },
           {
             "key": "ops",
-            "status": "added",
+            "type": "added",
             "value": "vops"
           }
         ]
@@ -58,22 +58,22 @@
   },
   {
     "key": "group1",
-    "status": "changed_children",
+    "type": "nested",
     "children": [
       {
         "key": "baz",
-        "status": "changed_value",
+        "type": "changed",
         "oldValue": "bas",
         "newValue": "bars"
       },
       {
         "key": "foo",
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "bar"
       },
       {
         "key": "nest",
-        "status": "changed_value",
+        "type": "changed",
         "oldValue": {
           "key": "value"
         },
@@ -83,14 +83,14 @@
   },
   {
     "key": "group2",
-    "status": "deleted",
+    "type": "deleted",
     "value": {
       "abc": 12345
     }
   },
   {
     "key": "group3",
-    "status": "added",
+    "type": "added",
     "value": {
       "fee": 100500
     }
