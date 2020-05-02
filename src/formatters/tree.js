@@ -1,91 +1,71 @@
 import { isPlainObject } from 'lodash';
 
-const makeIndent = (indentCount) => ' '.repeat(indentCount);
+const makeIndent = (indentCount, sign) => (
+  `${' '.repeat(indentCount - 2)}${sign || ' '} `
+);
 
-const wrapWithBraces = (string, indentCount = 0) => {
-  const indent = makeIndent(indentCount);
-  return `{\n${string}\n${indent}}`;
+const wrapCurlyBraces = (content, indentCount) => {
+  const closingBraceIndent = makeIndent(indentCount).slice(4);
+  return `{\n${content}\n${closingBraceIndent}}`;
 };
 
-const objectToString = (object, indentCount) => {
+const formatObject = (object, indentCount) => {
   const indent = makeIndent(indentCount + 4);
-  const keyValuePairsFormated = Object.entries(object)
+  const objectContent = Object.entries(object)
     .map(([key, value]) => `${indent}${key}: ${value}`)
     .join('\n');
 
-  return wrapWithBraces(keyValuePairsFormated, indentCount);
+  return wrapCurlyBraces(objectContent, indentCount + 4);
 };
 
-const formatValue = (value, indentCount) => {
-  const formatedValue = isPlainObject(value)
-    ? objectToString(value, indentCount)
-    : value;
+const formatValue = (value, indentCount) => (
+  isPlainObject(value) ? formatObject(value, indentCount) : `${value}`
+);
 
-  return formatedValue;
-};
-
-const getSign = (status) => {
-  const signs = {
-    unchanged: ' ',
-    changed_value: ' ',
-    changed_children: ' ',
-    added: '+',
-    deleted: '-',
-  };
-
-  return signs[status] || null;
-};
-
-const formatAsTree = (ast) => {
-  const iter = (diffs, indentCount) => {
-    const indent = makeIndent(indentCount);
-
-    const nodeToString = ({
-      key,
-      value,
-      oldValue,
-      newValue,
-      status,
-      children,
-    }) => {
-      if (status === 'changed_children') {
-        const sign = getSign(status);
-        const valueFormated = wrapWithBraces(
-          iter(children, indentCount + 4),
-          indentCount + 2,
-        );
-
-        return `${indent}${sign} ${key}: ${valueFormated}`;
+const formatAsTree = (ast, indentCount = 4) => {
+  const iter = (node) => {
+    switch (node.type) {
+      case 'added': {
+        const indent = makeIndent(indentCount, '+');
+        const value = formatValue(node.value, indentCount);
+        return `${indent}${node.key}: ${value}`;
       }
-
-      if (status === 'changed_value') {
-        const oldValueFormated = formatValue(oldValue, indentCount + 2);
-        const newValueFormated = formatValue(newValue, indentCount + 2);
-
-        const delSign = getSign('deleted');
-        const addSign = getSign('added');
-
+      case 'deleted': {
+        const indent = makeIndent(indentCount, '-');
+        const value = formatValue(node.value, indentCount);
+        return `${indent}${node.key}: ${value}`;
+      }
+      case 'unchanged': {
+        const indent = makeIndent(indentCount);
+        const value = formatValue(node.value, indentCount);
+        return `${indent}${node.key}: ${value}`;
+      }
+      case 'changed': {
+        const indentAdded = makeIndent(indentCount, '+');
+        const indentDeleted = makeIndent(indentCount, '-');
+        const newValue = formatValue(node.newValue, indentCount);
+        const oldValue = formatValue(node.oldValue, indentCount);
         return [
-          `${indent}${delSign} ${key}: ${oldValueFormated}`,
-          `${indent}${addSign} ${key}: ${newValueFormated}`,
+          `${indentDeleted}${node.key}: ${oldValue}`,
+          `${indentAdded}${node.key}: ${newValue}`,
         ];
       }
-
-      const valueFormated = formatValue(value, indentCount + 2);
-      const sign = getSign(status);
-
-      return `${indent}${sign} ${key}: ${valueFormated}`;
-    };
-
-    const diffString = diffs
-      .map(nodeToString)
-      .flat()
-      .join('\n');
-
-    return diffString;
+      case 'nested': {
+        const indent = makeIndent(indentCount);
+        const children = formatAsTree(node.children, indentCount + 4);
+        return `${indent}${node.key}: ${children}`;
+      }
+      default: {
+        throw new Error(`Unknown ast node type: "${node.type}".`);
+      }
+    }
   };
 
-  return wrapWithBraces(iter(ast, 2));
+  const tree = ast
+    .flatMap((node) => iter(node))
+    .join('\n');
+
+  return wrapCurlyBraces(tree, indentCount);
 };
 
 export default formatAsTree;
