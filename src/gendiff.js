@@ -15,19 +15,8 @@ const getFileData = (filePath) => {
 
 const getFileFormat = (fileName) => {
   const ext = path.extname(fileName);
-
-  switch (ext) {
-    case '.json':
-      return 'json';
-    case '.ini':
-      return 'ini';
-    case '.yaml':
-      return 'yaml';
-    case '.yml':
-      return 'yaml';
-    default:
-      throw new Error(`Unsupported file extension: "${ext}". Supported extensions: ".json", ".ini", ".yaml", ".yml".`);
-  }
+  const format = ext.slice(1);
+  return format === 'yml' ? 'yaml' : format;
 };
 
 const parse = (data, format) => getParser(format)(data);
