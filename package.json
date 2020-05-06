@@ -8,7 +8,7 @@
     "coverage": "",
     "prepublishOnly": "npm run build"
   },
-  "main": "dist/gendiff.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/siniiitsa/frontend-project-lvl2.git"
