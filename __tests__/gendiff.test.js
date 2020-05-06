@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import genDiff from '../src/gendiff.js';
+import genDiff from '../src/index.js';
 
 const getFixturePath = (filename) => (
   path.join(__dirname, '..', '__fixtures__', filename)
