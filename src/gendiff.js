@@ -37,34 +37,28 @@ const makeAst = (config1, config2) => {
 
   const ast = keys.map((key) => {
     if (!has(config1, key)) {
-      const addedNode = { key, type: 'added', value: config2[key] };
-      return addedNode;
+      return { key, type: 'added', value: config2[key] };
     }
 
     if (!has(config2, key)) {
-      const deletedNode = { key, type: 'deleted', value: config1[key] };
-      return deletedNode;
+      return { key, type: 'deleted', value: config1[key] };
     }
 
     if (config1[key] === config2[key]) {
-      const unchangedNode = { key, type: 'unchanged', value: config1[key] };
-      return unchangedNode;
+      return { key, type: 'unchanged', value: config1[key] };
     }
 
     if (isPlainObject(config1[key]) && isPlainObject(config2[key])) {
       const children = makeAst(config1[key], config2[key]);
-      const nestedNode = { key, type: 'nested', children };
-      return nestedNode;
+      return { key, type: 'nested', children };
     }
 
-    const changedNode = {
+    return {
       key,
       type: 'changed',
       oldValue: config1[key],
       newValue: config2[key],
     };
-
-    return changedNode;
   });
 
   return ast;
