@@ -64,12 +64,12 @@ const makeAst = (config1, config2) => {
   return ast;
 };
 
-const genDiff = (path1, path2, outputFormat) => {
-  const data1 = getFileData(path1);
-  const data2 = getFileData(path2);
+const genDiff = (filepath1, filepath2, outputFormat) => {
+  const data1 = getFileData(filepath1);
+  const data2 = getFileData(filepath2);
 
-  const config1 = parse(data1, getFileFormat(path1));
-  const config2 = parse(data2, getFileFormat(path2));
+  const config1 = parse(data1, getFileFormat(filepath1));
+  const config2 = parse(data2, getFileFormat(filepath2));
 
   const stringify = getFormatter(outputFormat);
   const ast = makeAst(config1, config2);
