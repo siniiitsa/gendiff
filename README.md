@@ -12,9 +12,9 @@ To install gendiff on your computer, you should:
 
 1. Download or clone this repository
 2. Open a terminal window in the project folder and run:
-   '''
+   ```
    npm link
-   '''
+   ```
    This will install the app as a global npm package you can run from anywhere in your terminal window.
 
 - [--format flat](https://asciinema.org/a/EL4IfZVnbWd9GsbsFav8jZt7H)
