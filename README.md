@@ -12,11 +12,38 @@ To install gendiff on your computer, you should:
 
 1. Download or clone this repository
 2. Open a terminal window in the project folder and run:
-   ```
-   npm link
-   ```
-   This will install the app as a global npm package you can run from anywhere in your terminal window.
 
-- [--format flat](https://asciinema.org/a/EL4IfZVnbWd9GsbsFav8jZt7H)
-- [--format tree](https://asciinema.org/a/a9aPI8yzUW9L23ZW7np5XcF6R)
-- [--format json](https://asciinema.org/a/B9UR1wiuBZ5H6XrS0RyyvjVoi)
+```
+npm link
+```
+
+This will install the app as a global npm package you can run from anywhere in your terminal window.
+
+## How to use
+
+Gendiff supports json, yaml and ini file formats. To generate the difference between two files, you need to go to your terminal window and type in:
+
+```
+gendiff filepath-1.json filepath-2.json
+```
+
+Note that Gendiff accepts both relative and absolute paths. By default Gendiff will output the difference in a tree-like format. You can change the output format providing an optional --format option with a specific format name:
+
+```
+gendiff --format tree filepath-1.ini filepath-2.ini
+gendiff --format plain filepath-1.json filepath-2.json
+gendiff --format json filepath-1.yml filepath-2.yml
+```
+
+Nothing prevents you from comparing two files of different formats, like this:
+
+```
+gendiff filepath-1.yml filepath-2.json
+gendiff filepath-1.ini filepath-2.yaml
+```
+
+To access gendiff help, do this:
+
+```
+gendiff --help
+```
