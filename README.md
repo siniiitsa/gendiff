@@ -1,6 +1,6 @@
 # Gendiff
 
-A CLI application that compares two configuration files, then computes a difference between them and shows it in the terminal, limilar to `git diff` command.
+A CLI application that compares two configuration files, then computes a difference between them and shows it in the terminal, similar to `git diff` command.
 
 [![Node CI](https://github.com/siniiitsa/frontend-project-lvl2/workflows/Node%20CI/badge.svg)](https://github.com/siniiitsa/frontend-project-lvl2/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c9931ddd90cd1bd16cd/maintainability)](https://codeclimate.com/github/siniiitsa/frontend-project-lvl2/maintainability)
