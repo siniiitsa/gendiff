@@ -1,6 +1,6 @@
 # Gendiff
 
-A cli application that compares two configuration files, than generates and shows the difference.
+A CLI application that compares two configuration files, then computes a difference between them and shows it in the terminal, limilar to `git diff` command.
 
 [![Node CI](https://github.com/siniiitsa/frontend-project-lvl2/workflows/Node%20CI/badge.svg)](https://github.com/siniiitsa/frontend-project-lvl2/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4c9931ddd90cd1bd16cd/maintainability)](https://codeclimate.com/github/siniiitsa/frontend-project-lvl2/maintainability)
@@ -17,7 +17,7 @@ To install gendiff on your computer, you should:
 npm link
 ```
 
-This will install the app as a global npm package you can run from anywhere in your terminal window.
+This will install Gendiff as a global npm package you can run in a terminal window.
 
 ## How to use
 
