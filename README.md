@@ -42,7 +42,7 @@ gendiff filepath-1.yml filepath-2.json
 gendiff filepath-1.ini filepath-2.yaml
 ```
 
-To access gendiff help, do this:
+To access gendiff help, run this:
 
 ```
 gendiff --help
