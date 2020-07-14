@@ -24,22 +24,22 @@ This will install Gendiff as a global npm package you can run in a terminal wind
 Gendiff supports json, yaml and ini file formats. To generate the difference between two files, you need to go to your terminal window and type in:
 
 ```
-gendiff filepath-1.json filepath-2.json
+gendiff file1.json file2.json
 ```
 
 Note that Gendiff accepts both relative and absolute paths. By default Gendiff will output the difference in a tree-like format. You can change the output format providing an optional --format option with a specific format name:
 
 ```
-gendiff --format tree filepath-1.ini filepath-2.ini
-gendiff --format plain filepath-1.json filepath-2.json
-gendiff --format json filepath-1.yml filepath-2.yml
+gendiff --format tree file1.ini file2.ini
+gendiff --format plain file1.json file2.json
+gendiff --format json file1.yml file2.yml
 ```
 
 Nothing prevents you from comparing two files of different formats, like this:
 
 ```
-gendiff filepath-1.yml filepath-2.json
-gendiff filepath-1.ini filepath-2.yaml
+gendiff file1.yml file2.json
+gendiff file1.ini file2.yaml
 ```
 
 To access gendiff help, run this:
