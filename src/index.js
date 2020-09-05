@@ -14,8 +14,7 @@ const getFileData = (filePath) => {
 };
 
 const getFileFormat = (fileName) => {
-  const ext = path.extname(fileName);
-  const format = ext.slice(1);
+  const format = path.extname(fileName).slice(1);
   return format === 'yml' ? 'yaml' : format;
 };
 
