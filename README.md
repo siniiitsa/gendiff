@@ -21,10 +21,6 @@ This will install Gendiff as a global npm package you can run in a terminal wind
 
 ## How to use
 
-First, watch this:
-
-[![asciicast](https://asciinema.org/a/UxYXnmKPyma9wLCdKRWqS2PuH.svg)](https://asciinema.org/a/UxYXnmKPyma9wLCdKRWqS2PuH)
-
 Gendiff supports json, yaml and ini file formats. To generate the difference between two files, you need to go to your terminal window and type in:
 
 ```
